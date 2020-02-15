@@ -25,7 +25,7 @@ def finances():
     return render_template("finances/finances.html")
 
 
-@app.route("/netstik-report", methods=["GET", "POST"])
+@app.route("/finances/netstik-report", methods=["GET", "POST"])
 def netstik_report():
     if request.method == "POST":
         if "report_file" not in request.files:
