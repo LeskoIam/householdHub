@@ -41,11 +41,11 @@ def import_all(report_file: str):
 @app.route('/', methods=["GET", "POST"])
 def show():
     if request.method == "POST":
-        if "csv_file" not in request.files:
+        if "report_file" not in request.files:
             flash("No file part")
             return redirect(url_for("show"))
 
-        file = request.files['csv_file']
+        file = request.files["report_file"]
         if file.filename == '':
             flash("Datoteka ni izbrana", category="error")
             return redirect(url_for("show"))
@@ -63,5 +63,7 @@ def show():
             return redirect(url_for("show"))
 
     elif request.method == "GET":
-        return render_template("netstik_report/show.html", transactions=get_all_transactions(), transaction_header=get_transaction_header())
-    return 'Hello World!'
+        return render_template("netstik_report/netstik_report.html",
+                               transactions=get_all_transactions(),
+                               transaction_header=get_transaction_header())
+    return "Hello World!"

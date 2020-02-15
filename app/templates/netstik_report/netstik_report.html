@@ -3,18 +3,18 @@
 
     <form action="{{ url_for("show") }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="exampleFormControlFile1">Izberi CSV datoteko za uvoz</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="csv_file">
+            <label for="exampleFormControlFile1">Izberi izpisek za uvoz</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="report_file">
         </div>
         <button type="submit" class="btn btn-primary btn-sm">Uvozi</button>
     </form>
     <table class="table">
         <thead class="thead-dark">
-            <tr>
-                {% for h in transaction_header %}
-                    <th scope="col">{{ h }}</th>
-                {% endfor %}
-            </tr>
+        <tr>
+            {% for h in transaction_header %}
+                <th scope="col">{{ h }}</th>
+            {% endfor %}
+        </tr>
         </thead>
         {% for tr in transactions %}
             <tr>
