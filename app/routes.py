@@ -1,41 +1,14 @@
-from sqlalchemy.exc import IntegrityError
-from flask import render_template, request, flash, redirect, url_for
-from . import app, db
-from .models import Transaction
-from config import DB_IMPORT_FILE_PATH
-from .common.netstik.netstikreport import NetstikReport
-from .common.db_helpers import get_all_transactions, get_transaction_header
-
-
 # Documentation is like sex.
 # When it's good, it's very good.
 # When it's bad, it's better than nothing.
 # When it lies to you, it may be a while before you realize something's wrong.
 
-ALLOWED_EXTENSIONS = {"txt", }
+from flask import render_template, request, flash, redirect, url_for
 
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-def import_all(report_file: str):
-    report = NetstikReport(report_file=report_file)
-    for trans in report.transactions:
-        tr = Transaction(date_validation=trans.date_1,
-                         date_booking=trans.date_2,
-                         amount_out=trans.amount_out,
-                         amount_in=trans.amount_in,
-                         balance=trans.balance,
-                         transaction_entity=trans.person,
-                         comment=trans.comment,
-                         purpose_code=trans.purpose_code)
-        db.session.add(tr)
-    try:
-        db.session.commit()
-    except IntegrityError as exc:
-        return False, str(exc)
-    return True, None
+from config import DB_IMPORT_FILE_PATH
+from . import app
+from .common.common import import_all, allowed_file
+from .common.db_helpers import get_all_transactions, get_transaction_header
 
 
 @app.route("/index")
@@ -43,6 +16,9 @@ def index():
     return render_template("index.html")
 
 
+# ######################
+# Finances
+# ######################
 @app.route("/finances")
 def finances():
     return render_template("finances/finances.html")

@@ -10,3 +10,5 @@ class Config:
 
 
 DB_IMPORT_FILE_PATH = os.path.join(basedir, r"./upload/report.txt")
+
+ALLOWED_EXTENSIONS = {"txt", }
