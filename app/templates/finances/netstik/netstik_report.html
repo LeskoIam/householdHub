@@ -8,7 +8,7 @@
         </div>
         <button type="submit" class="btn btn-primary btn-sm">Uvozi</button>
     </form>
-    <table class="table">
+    <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
             {% for h in transaction_header %}
@@ -19,7 +19,11 @@
         {% for tr in transactions %}
             <tr>
                 {% for h in transaction_header %}
-                    <td>{{ tr[h] }}</td>
+                    {% if h in ["amount_in", "amount_out", "balance"] %}
+                        <td>{{ tr[h] | round(2) }}</td>
+                    {% else %}
+                        <td>{{ tr[h] }}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}
