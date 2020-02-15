@@ -1,0 +1,28 @@
+{% extends "netstik_report/netstik_report_base.html" %}
+{% block netstik_report_content %}
+
+    <form action="{{ url_for("show") }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Izberi CSV datoteko za uvoz</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="csv_file">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Uvozi</button>
+    </form>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                {% for h in transaction_header %}
+                    <th scope="col">{{ h }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for tr in transactions %}
+            <tr>
+                {% for h in transaction_header %}
+                    <td>{{ tr[h] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
