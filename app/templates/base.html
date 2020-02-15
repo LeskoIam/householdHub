@@ -34,12 +34,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
 
-                <li {% if "index" in request.url_rule.endpoint %}class="nav-item active" {% else %}class="nav-item"{% endif %}>
-                    <a class="nav-link" href="{{ url_for("index") }}">Domov</a>
+                <li {% if request.url_rule.endpoint in ["index"] %}class="nav-item active" {% else %}class="nav-item"{% endif %}>
+                    <a class="nav-link bold" href="{{ url_for("index") }}">Domov</a>
                 </li>
 
-                <li {% if "finances" in request.url_rule.endpoint %}class="nav-item active" {% else %}class="nav-item"{% endif %}>
-                    <a class="nav-link" href="{{ url_for("finances") }}">Finance</a>
+                <li {% if request.url_rule.endpoint in ["netstik_report", "finances"] %}class="nav-item active" {% else %}class="nav-item"{% endif %}>
+                    <a class="nav-link bold" href="{{ url_for("finances") }}">Finance</a>
+                    {% block finances_nav%}{% endblock %}
                 </li>
 
             </ul>
