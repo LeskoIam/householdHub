@@ -7,10 +7,11 @@ from flask import render_template, request, flash, redirect, url_for
 
 from config import DB_IMPORT_FILE_PATH
 from . import app
-from .common.common import import_all, allowed_file
-from .common.db_helpers import get_all_transactions, get_transaction_header
+from .common.common import allowed_file
+from .common.db_helpers import import_all, get_all_transactions, get_transaction_header
 
 
+@app.route("/")
 @app.route("/index")
 def index():
     return render_template("index.html")
@@ -24,7 +25,7 @@ def finances():
     return render_template("finances/finances.html")
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route("/netstik-report", methods=["GET", "POST"])
 def netstik_report():
     if request.method == "POST":
         if "report_file" not in request.files:
