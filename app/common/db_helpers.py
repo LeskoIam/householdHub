@@ -7,7 +7,10 @@ from sqlalchemy.exc import IntegrityError
 
 from app import db
 from app.models import Transaction
-from .netstik.netstikreport import NetstikReport
+if __name__ == '__main__':
+    from netstik.netstikreport import NetstikReport
+else:
+    from .netstik.netstikreport import NetstikReport
 
 
 def get_all_transactions():
