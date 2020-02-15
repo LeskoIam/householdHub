@@ -21,6 +21,10 @@
                 {% for h in transaction_header %}
                     {% if h in ["amount_in", "amount_out", "balance"] %}
                         <td>{{ tr[h] | round(2) }}</td>
+                    {% elif h in ["date_validation", "date_booking"] %}
+                        <td>{{ tr[h] | format_datetime }}</td>
+                    {% elif h in ["transaction_entity", "comment"] and tr[h] != None %}
+                        <td title="{{ tr[h] }}">{{ (tr[h])[:15] }} ...</td>
                     {% else %}
                         <td>{{ tr[h] }}</td>
                     {% endif %}
