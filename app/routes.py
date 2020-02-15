@@ -38,17 +38,27 @@ def import_all(report_file: str):
     return True, None
 
 
+@app.route("/index")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/finances")
+def finances():
+    return render_template("finances/finances.html")
+
+
 @app.route('/', methods=["GET", "POST"])
-def show():
+def netstik_report():
     if request.method == "POST":
         if "report_file" not in request.files:
             flash("No file part")
-            return redirect(url_for("show"))
+            return redirect(url_for("netstik_report"))
 
         file = request.files["report_file"]
         if file.filename == '':
             flash("Datoteka ni izbrana", category="error")
-            return redirect(url_for("show"))
+            return redirect(url_for("netstik_report"))
 
         if file and allowed_file(file.filename):
             file.save(DB_IMPORT_FILE_PATH)
@@ -57,13 +67,13 @@ def show():
                 flash("Uspešno uvoženo")
             else:
                 flash(f"Uvoz ni uspel: {str(reason)}", category="error")
-            return redirect(url_for("show"))
+            return redirect(url_for("netstik_report"))
         else:
             flash("Dovoljene vrste datotek so [csv]", category="error")
-            return redirect(url_for("show"))
+            return redirect(url_for("netstik_report"))
 
     elif request.method == "GET":
-        return render_template("netstik_report/netstik_report.html",
+        return render_template("finances/netstik/netstik_report.html",
                                transactions=get_all_transactions(),
                                transaction_header=get_transaction_header())
     return "Hello World!"

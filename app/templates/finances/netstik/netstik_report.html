@@ -1,7 +1,7 @@
-{% extends "netstik_report/netstik_report_base.html" %}
-{% block netstik_report_content %}
+{% extends "finances/finances_base.html" %}
+{% block finances_content %}
 
-    <form action="{{ url_for("show") }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for("netstik_report") }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="exampleFormControlFile1">Izberi izpisek za uvoz</label>
             <input type="file" class="form-control-file" id="exampleFormControlFile1" name="report_file">
