@@ -8,6 +8,7 @@ from flask import render_template, request, flash, redirect, url_for
 from config import DB_IMPORT_FILE_PATH
 from . import app
 from .common.common import allowed_file
+from .common.hue.hue import Hue
 from .common.db_helpers import import_all, get_all_transactions, get_transaction_header
 
 
@@ -54,3 +55,10 @@ def netstik_report():
                                transactions=get_all_transactions(),
                                transaction_header=get_transaction_header())
     return "Hello World!"
+
+# ######################
+# Hue
+# ######################
+
+# @app.route("/hue")
+# def hue():
