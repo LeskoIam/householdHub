@@ -12,7 +12,7 @@ from qhue import Bridge, QhueException, create_new_username
 BRIDGE_IP = "192.168.1.51"
 
 # the path for the username credentials file
-CRED_FILE_PATH = "qhue_username.txt"
+CRED_FILE_PATH = r"D:\Lesko\workspace\householdHub\scrambledeggs\qhue_username.txt"
 
 
 class Hue:
