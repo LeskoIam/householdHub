@@ -43,7 +43,7 @@ class Hue:
         self.__create_bridge()
         lights = self.bridge.lights
         for key, val in lights().items():
-            self.lights[key] = lights[key]
+            self.lights[int(key)] = lights[key]
 
     def list_devices(self):
         self.find_all_lights()

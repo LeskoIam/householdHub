@@ -73,11 +73,9 @@ def hue():
         h = Hue(BRIDGE_IP, username)
         h.find_all_lights()
         lights = h.lights
-        print(lights)
-        lights["9"]("state", on=True)
+        lights[9]("state", on=True)
         time.sleep(1)
-        lights["9"]("state", on=False)
+        lights[9]("state", on=False)
         time.sleep(1)
-        print("OFF")
 
     return "zmaj"
