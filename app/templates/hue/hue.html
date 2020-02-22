@@ -1,8 +1,35 @@
 {% extends "hue/hue_base.html" %}
 
-{% block finances_content %}
+{% block hue_content %}
     Index page of Hue subsection of the page
-    <form method="post" action="{{ url_for("hue") }}">
-        <button type="submit">jdjd</button>
-    </form>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            {% for h in ["#", "Ime", "Stanje", "Dosegljivost", " "] %}
+                <th scope="col">{{ h }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        {% for num, light in lights %}
+            {% if light.state.on %}
+                <tr style="background-color: yellowgreen">
+            {% else %}
+                <tr>
+            {% endif %}
+                <td>{{ num }}</td>
+                <td>{{ light.name }}</td>
+                <td>{{ light.state.on }}</td>
+                <td>{{ light.state.reachable }}</td>
+
+                <td><a href="{{ url_for("hue_toggle_light", light_num=num) }}">
+                    {% if light.state.on %}
+                        Off
+                    {% else %}
+                        On
+                    {% endif %}
+                </a></td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

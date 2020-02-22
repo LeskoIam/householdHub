@@ -11,6 +11,10 @@ from .common.common import allowed_file
 from .common.hue.hue import Hue, BRIDGE_IP, CRED_FILE_PATH
 from .common.db_helpers import import_all, get_all_transactions, get_transaction_header
 
+with open(CRED_FILE_PATH, "r") as cred_file:
+    username = cred_file.read()
+hue = Hue(BRIDGE_IP, username)
+
 
 @app.route("/")
 @app.route("/index")
@@ -63,19 +67,17 @@ def netstik_report():
 
 
 @app.route("/hue", methods=["GET", "POST"])
-def hue():
+def hue_handler():
     if request.method == "GET":
-        return render_template("hue/hue.html")
-    elif request.method == "POST":
-        with open(CRED_FILE_PATH, "r") as cred_file:
-            username = cred_file.read()
-        import time
-        h = Hue(BRIDGE_IP, username)
-        h.find_all_lights()
-        lights = h.lights
-        lights[9]("state", on=True)
-        time.sleep(1)
-        lights[9]("state", on=False)
-        time.sleep(1)
-
+        return render_template("hue/hue.html", lights=[(num, light()) for num, light in hue.lights.items()])
     return "zmaj"
+
+
+@app.route("/hue/toggle/<int:light_num>", methods=["GET"])
+def hue_toggle_light(light_num):
+    light = hue.lights[light_num]
+    if light()["state"]["on"]:
+        light("state", on=False)
+    else:
+        light("state", on=True)
+    return redirect(url_for("hue_handler"))

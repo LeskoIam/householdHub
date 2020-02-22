@@ -22,7 +22,7 @@ class Hue:
         self.credentials = credentials
 
         self.bridge = None
-        self.lights = {}
+        self.__lights = {}
 
     def register_hue(self, save_credentials_cb: Optional[Callable] = None):
         if self.credentials is None:
@@ -39,14 +39,18 @@ class Hue:
         if self.bridge is None:
             self.bridge = Bridge(self.bridge_ip, self.credentials)
 
-    def find_all_lights(self):
+    def __find_all_lights(self):
         self.__create_bridge()
         lights = self.bridge.lights
         for key, val in lights().items():
-            self.lights[int(key)] = lights[key]
+            self.__lights[int(key)] = lights[key]
+
+    @property
+    def lights(self) -> dict:
+        self.__find_all_lights()
+        return self.__lights
 
     def list_devices(self):
-        self.find_all_lights()
         for hue_num, light in self.lights.items():
             print(f"{hue_num} - {light}")
             for key, val in light().items():
