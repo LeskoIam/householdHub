@@ -34,7 +34,7 @@ def finances():
 def netstik_report():
     if request.method == "POST":
         if "report_file" not in request.files:
-            flash("No file part")
+            flash("No file part", category="error")
             return redirect(url_for("netstik_report"))
 
         file = request.files["report_file"]
@@ -48,7 +48,8 @@ def netstik_report():
             if import_success:
                 flash("Uspešno uvoženo")
             else:
-                flash(f"Uvoz ni uspel: {str(reason)}", category="error")
+                flash(f"Uvoz delno uspel: {str(reason)[:100]}", category="warning")
+                app.logger.warning(reason)
             return redirect(url_for("netstik_report"))
         else:
             flash("Dovoljene vrste datotek so [csv]", category="error")
@@ -81,6 +82,11 @@ def hue_toggle_light(light_num):
     else:
         light("state", on=True)
     return redirect(url_for("hue_handler"))
+
+
+# ######################
+# Miscellaneous
+# ######################
 
 
 @app.route("/misc", methods=["GET"])

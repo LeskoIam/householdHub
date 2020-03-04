@@ -20,6 +20,8 @@
                 {% for category, message in messages %}
                     {% if category == "error" %}
                         <li style="color: red;"> {{ message }} </li>
+                    {% elif category == "warning" %}
+                        <li style="color: blue;"> {{ message }} </li>
                     {% else %}
                         <li> {{ message }} </li>
                     {% endif %}
