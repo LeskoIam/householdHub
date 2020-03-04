@@ -24,8 +24,13 @@
                 <td>{{ num }}</td>
                 <td>{{ light.name }}</td>
                 <td>{{ light.state.on }}</td>
-                <td>{{ light.state.reachable }}</td>
-
+                <td>
+                {% if  light.state.reachable%}
+                    <div class="green led"></div>
+                {% else %}
+                    <div class="red led"></div>
+                {%  endif %}
+                </td>
                 <td><a href="{{ url_for("hue_toggle_light", light_num=num) }}">
                     {% if light.state.on %}
                         Off

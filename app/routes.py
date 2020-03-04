@@ -58,7 +58,7 @@ def netstik_report():
         return render_template("finances/netstik/netstik_report.html",
                                transactions=get_all_transactions(),
                                transaction_header=get_transaction_header())
-    return "Hello World!"
+    return "There"
 
 
 # ######################
@@ -70,7 +70,7 @@ def netstik_report():
 def hue_handler():
     if request.method == "GET":
         return render_template("hue/hue.html", lights=[(num, light()) for num, light in hue.lights.items()])
-    return "zmaj"
+    return "be"
 
 
 @app.route("/hue/toggle/<int:light_num>", methods=["GET"])
