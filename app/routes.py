@@ -81,3 +81,17 @@ def hue_toggle_light(light_num):
     else:
         light("state", on=True)
     return redirect(url_for("hue_handler"))
+
+
+@app.route("/misc", methods=["GET"])
+def misc_handler():
+    if request.method == "GET":
+        return render_template("misc/misc.html")
+    return "dragons"
+
+
+@app.route("/misc/black-page", methods=["GET"])
+def black_page():
+    if request.method == "GET":
+        return render_template("misc/black_page/black_page.html")
+    return "dragons"

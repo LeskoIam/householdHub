@@ -44,9 +44,14 @@
                     {% block finances_nav%}{% endblock %}
                 </li>
 
-                <li {% if request.url_rule.endpoint in ["hue"] %} class="nav-item active" {% else %}class="nav-item"{% endif %}>
+                <li {% if request.url_rule.endpoint in ["hue_handler"] %} class="nav-item active" {% else %}class="nav-item"{% endif %}>
                     <a class="nav-link bold" href="{{ url_for("hue_handler") }}">Hue</a>
                     {% block hue_nav%}{% endblock %}
+                </li>
+
+                <li {% if request.url_rule.endpoint in ["misc_handler", "black_page"] %} class="nav-item active" {% else %}class="nav-item"{% endif %}>
+                    <a class="nav-link bold" href="{{ url_for("misc_handler") }}">Misc</a>
+                    {% block misc_nav%}{% endblock %}
                 </li>
 
             </ul>
