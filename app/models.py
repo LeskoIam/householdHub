@@ -19,11 +19,15 @@ class Transaction(db.Model):
     comment = db.Column(db.String(256))
     purpose_code = db.Column(db.String(4))
 
+    # TODO: T1. Workaround for bellow
+    thash = db.Column(db.String, unique=True)
+
     user_comment = db.relationship('UserComment', backref='transaction', lazy='dynamic')
 
-    __table_args__ = (UniqueConstraint("date_validation", "date_booking", "amount_out", "amount_in",
-                                       "balance", "transaction_entity", "comment", "purpose_code",
-                                       name='_transaction_uc'),)
+    # TODO: T1. Doesn't work under SQLite, not sure if SQLAlchemy or SQLite
+    # __table_args__ = (UniqueConstraint("date_validation", "date_booking", "amount_out", "amount_in",
+    #                                    "balance", "transaction_entity", "comment", "purpose_code",
+    #                                    name='_transaction_uc'),)
 
 
 class Category(db.Model):
